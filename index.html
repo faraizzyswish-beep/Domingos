@@ -13,15 +13,18 @@
         }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 20px;
+            padding: 20px 0;
             /* Garanta que o arquivo de imagem esteja na mesma pasta com este exato nome */
             background: #111 url('Screenshot_20260925_205052_Google.jpg') no-repeat center center/cover;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         /* Camada escura de contraste */
@@ -65,6 +68,29 @@
             gap: 10px;
         }
 
+        .Convite {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #ffffff;
+            padding: 25px 20px;
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+            max-width: 90%;
+            width: 480px;
+        }
+
+        .Convite h1 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #f3e5ab;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+        }
+
         .box {
             background: rgba(0, 0, 0, 0.75);
             border: 1px solid #d4af37;
@@ -89,10 +115,54 @@
             letter-spacing: 1px;
         }
 
+        /* Estilos da Localização e Mensagens Adicionadas */
+        .location-box {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .btn-location {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #d4af37;
+            color: #111;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .btn-location:hover {
+            background: #f3e5ab;
+        }
+
+        .waiting-text {
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            margin-top: 15px;
+            text-transform: uppercase;
+        }
+
+        .obs-text {
+            color: #d4af37;
+            font-size: 0.75rem;
+            margin-top: 8px;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
         @media (max-width: 480px) {
             h1 { font-size: 1.3rem; }
+            .Convite h1 { font-size: 1.1rem; }
             .number { font-size: 1.5rem; }
             .label { font-size: 0.65rem; }
+            .waiting-text { font-size: 0.95rem; }
+            .obs-text { font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -120,6 +190,20 @@
                 <span class="label">Segundos</span>
             </div>
         </div>
+    </div>
+
+    <div class="Convite">
+        <h1>VOCÊ É O MEU CONVIDADO ESPECIAL</h1>
+        
+        <!-- BOTAO DE LOCALIZACAO -->
+        <div class="location-box">
+            <!-- Substitua o '#' pelo link do seu Google Maps -->
+            <a href="#" target="_blank" class="btn-location">📍 Ver Localização</a>
+        </div>
+
+        <!-- MENSAGENS -->
+        <div class="waiting-text">ESTAREI ESPERANDO POR VOCÊ</div>
+        <div class="obs-text">OBS: ISSO NÃO É UMA FESTA, MAS VAMOS FAZER PARECER UMA.</div>
     </div>
 
     <script>
