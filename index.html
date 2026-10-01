@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contagem Regressiva para o  meu Aniversário</title>
+    <title>Contagem Regressiva para o Aniversário</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,6 @@
             align-items: center;
             gap: 20px;
             padding: 20px 0;
-            /* Garanta que o arquivo de imagem esteja na mesma pasta com este exato nome */
             background: #111 url('Screenshot_20260925_205052_Google.jpg') no-repeat center center/cover;
             position: relative;
             overflow-x: hidden;
@@ -39,6 +38,159 @@
             z-index: 1;
         }
 
+        /* --- MENUS NO CANTO SUPERIOR ESQUERDO --- */
+        .top-left-menu {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 10;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .menu-btn {
+            background: rgba(20, 20, 20, 0.85);
+            border: 1px solid #d4af37;
+            color: #f3e5ab;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: #d4af37;
+            color: #111;
+        }
+
+        /* --- JANELAS MODAIS (POPUP) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid #d4af37;
+            border-radius: 20px;
+            padding: 25px 20px;
+            width: 100%;
+            max-width: 400px;
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+        }
+
+        .modal-content h2 {
+            color: #f3e5ab;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+            text-align: left;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .info-list li {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .total-count {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #d4af37;
+            font-size: 0.95rem;
+        }
+
+        /* --- FORMULÁRIO DE MENSAGENS E BRINDES --- */
+        .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #d4af37;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d4af37;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 80px;
+        }
+
+        .btn-send {
+            width: 100%;
+            padding: 10px;
+            background: #d4af37;
+            color: #111;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            margin-top: 5px;
+        }
+
+        .btn-send:hover {
+            background: #f3e5ab;
+        }
+
+        /* --- ESTRUTURA ORIGINAL --- */
         .container {
             position: relative;
             z-index: 2;
@@ -115,7 +267,6 @@
             letter-spacing: 1px;
         }
 
-        /* Estilos da Localização e Mensagens Adicionadas */
         .location-box {
             margin-top: 15px;
             margin-bottom: 15px;
@@ -170,6 +321,62 @@
 
     <div class="overlay"></div>
 
+    <!-- MENUS CANTO SUPERIOR ESQUERDO -->
+    <div class="top-left-menu">
+        <button class="menu-btn" onclick="openModal('modalPessoas')">👥 Pessoas</button>
+        <button class="menu-btn" onclick="openModal('modalBebidas')">🍹 Bebidas</button>
+        <button class="menu-btn" onclick="openModal('modalMensagens')">✉️ Enviar Mensagem / Brindes</button>
+    </div>
+
+    <!-- JANELA MODAL: PESSOAS CONFIRMADAS -->
+    <div id="modalPessoas" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modalPessoas')">&times;</span>
+            <h2>Presenças Confirmadas</h2>
+            <ul class="info-list">
+                <li><span>Amigos 3</span> <span>✔ Confirmado</span></li>
+                <li><span>Amigas 2</span> <span>✔ Confirmado</span></li>
+            </ul>
+            <div class="total-count">Total Confirmados: 2</div>
+        </div>
+    </div>
+
+    <!-- JANELA MODAL: BEBIDAS -->
+    <div id="modalBebidas" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modalBebidas')">&times;</span>
+            <h2>Lista de Bebidas</h2>
+            <ul class="info-list">
+                <li><span>Cerveja</span> <span>2 Caixas</span></li>
+                <li><span>Refrigerante</span> <span>1 Caixa</span></li>
+                <li><span>Whisky / Liqueur</span> <span>2 Garrafas</span></li>
+            </ul>
+            <div class="total-count">Disponíveis no Local</div>
+        </div>
+    </div>
+
+    <!-- JANELA MODAL: MENSAGENS E BRINDES (PRIVADO) -->
+    <div id="modalMensagens" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modalMensagens')">&times;</span>
+            <h2>Deixar Mensagem / Brinde</h2>
+            <p style="font-size: 0.75rem; color: #ccc; margin-bottom: 12px;">Sua mensagem será enviada de forma privada.</p>
+            
+            <!-- Substitua "SEU_EMAIL_AQUI@gmail.com" pelo seu e-mail no Formspree (https://formspree.io) -->
+            <form action="https://formspree.io/f/xjykdjyr" method="POST">
+                <div class="form-group">
+                    <label>Seu Nome</label>
+                    <input type="text" name="nome" placeholder="Digite seu nome" required>
+                </div>
+                <div class="form-group">
+                    <label>Mensagem ou Brinde</label>
+                    <textarea name="mensagem" placeholder="Escreva aqui seu recado ou brinde..." required></textarea>
+                </div>
+                <button type="submit" class="btn-send">Enviar Privadamente</button>
+            </form>
+        </div>
+    </div>
+
     <div class="container">
         <h1>Faltam para o meu aniversário</h1>
         <div class="countdown">
@@ -195,23 +402,29 @@
     <div class="Convite">
         <h1>VOCÊ É O MEU CONVIDADO ESPECIAL</h1>
         
-        <!-- BOTAO DE LOCALIZACAO -->
         <div class="location-box">
-            <!-- Substitua o '#' pelo link do seu Google Maps -->
-            <a href="https://www.google.com/maps/place/69MJ%2BC69+Vila+de+Cacuaco,+Cacuaco/@-8.7664542,13.3806061,15z/data=!4m6!3m5!1s0x1a51f1005d673ae9:0xd9ef74d04cd3d450!8m2!3d-8.7664542!4d13.3806061!16s%2Fg%2F11ynf48q9l?utm_campaign=ml-ardl-mgrt4&g_ep=Eg1tbF8yMDI2MDkyN18wIJvbDyoASAJQAQ%3D%3D" target="_blank" class="btn-location">📍 Ver Localização</a>
+            <a href="#" target="_blank" class="btn-location">📍 Ver Localização</a>
         </div>
 
-        <!-- MENSAGENS -->
-        <div class="waiting-text">ESTAREI ESPERANDO POR VOCÊ!</div>
+        <div class="waiting-text">ESTAREI ESPERANDO POR VOCÊ</div>
         <div class="obs-text">OBS: ISSO NÃO É UMA FESTA, MAS VAMOS FAZER PARECER UMA.</div>
     </div>
 
     <script>
-        // -------------------------------------------------------------
-        // DEFINA AQUI A DATA E HORA EXATAS DO SEU ANIVERSÁRIO!
-        // Formato: Ano, Mês (0-11, onde 0 = Jan, 9 = Out, 11 = Dez), Dia, Hora, Min, Seg
-        // Exemplo: 18 de Outubro de 2026 às 00:00:00 -> new Date(2026, 9, 18, 0, 0, 0)
-        // -------------------------------------------------------------
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
         const targetDate = new Date(2026, 9, 19, 0, 0, 0).getTime();
 
         function updateCountdown() {
